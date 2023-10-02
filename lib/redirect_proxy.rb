@@ -4,24 +4,19 @@ require "uri"
 require "base64"
 
 class RedirectProxy
-  attr_reader :request, :base_url
-
   def call(env)
-    @request = Rack::Request.new(env)
-    @base_url = URI.parse(Base64.decode64(@request.params["state"]))
+    request = Rack::Request.new(env)
 
-    [301, { "Location" => url }, []]
-  end
+    # Eg. https://your-puma-dev-app.test or https://your-staging-environment.com etc
+    origin_uri = URI.parse(Base64.decode64(request.params["state"]))
 
-  private
+    # We redirect with the path / query string from the incoming request but replace the
+    # host, scheme, and port with the origin_uri from the state parameter.
+    redirect_uri = URI.parse(request.url)
+    redirect_uri.scheme = origin_uri.scheme
+    redirect_uri.host = origin_uri.host
+    redirect_uri.port = origin_uri.port
 
-  def url
-    uri = URI.parse(request.url).tap do |url|
-      url.scheme = base_url.scheme
-      url.host = base_url.host
-      url.port = base_url.port
-    end
-
-    uri.to_s
+    [301, { "Location" => redirect_uri.to_s }, []]
   end
 end
