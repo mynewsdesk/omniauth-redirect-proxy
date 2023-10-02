@@ -1,11 +1,19 @@
-#!/bin/sh
-# Make sure local dependencies are met.
+#!/bin/bash
 
-cd "$(dirname $0)"/..
+set -e
 
-gem install bundler --conservative
+function header {
+  printf "\n== $1 ==\n"
+}
 
-rm -f .bundle/config
+header "Installing brew dependencies"
+brew update # bundle does not update automatically (unlike install / upgrade)
+brew bundle check --no-upgrade || brew bundle --no-lock --no-upgrade
 
-bundle check --path .bundle > /dev/null 2>&1 ||
-  bundle install --path=.bundle
+header "Installing Ruby"
+brew upgrade ruby-build # make sure we're on the latest version
+rbenv install --skip-existing
+rbenv rehash
+
+header "Installing gem dependencies"
+bundle

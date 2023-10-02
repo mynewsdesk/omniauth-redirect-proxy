@@ -1,0 +1,504 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  # Exclude automatically generated rails files for easier app:update's etc
+  Exclude:
+    - bin/*
+    - db/schema.rb
+    - config/boot.rb
+    - config/environment.rb
+    - config/environments/*
+    - config/initializers/filter_parameter_logging.rb
+    - config/initializers/session_store.rb
+    - config/locales/plurals.rb # usually cargo culted from svenfuchs and full of violations
+    - vendor/**/*
+    - node_modules/**/*
+    # ignore old migrations
+    - db/migrate/201*
+    - db/migrate/2020*
+    - db/migrate/2021*
+    - db/migrate/2022*
+  DisplayCopNames: true
+  NewCops: disable
+  TargetRubyVersion: 3.2
+
+# https://github.com/mynewsdesk/mynewsdesk/pull/3197
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+# https://github.com/mynewsdesk/mynewsdesk/pull/3041
+# https://github.com/mynewsdesk/mynewsdesk/pull/3260 (change Style/ to Layout/)
+Layout/ExtraSpacing:
+  AllowForAlignment: false
+
+# https://github.com/mynewsdesk/mynewsdesk/pull/3065
+# https://github.com/mynewsdesk/mynewsdesk/pull/3260 (change Style/ to Layout/)
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# https://github.com/mynewsdesk/mynewsdesk/pull/3205
+Layout/LineLength:
+  Max: 128
+  AllowURI: true # https://github.com/mynewsdesk/mnd-rubocop/pull/6
+
+# https://github.com/mynewsdesk/mynewsdesk/pull/3520
+Style/GuardClause:
+  Enabled: false
+
+# https://github.com/mynewsdesk/mnd-rubocop/pull/3
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# https://github.com/mynewsdesk/mnd-rubocop/pull/2
+# (change TrailingCommaInLiteral to TrailingCommaInArrayLiteral & TrailingCommaInHashLiteral)
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+# We have a lot of variables looking like eg. foo_bar_2019, this cop would
+# want that to be foo_bar2019 which is worse in many cases.
+Naming/VariableNumber:
+  Enabled: false
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+# .positive? doesn't seem easier to read than > 0 for most cases
+Style/NumericPredicate:
+  Enabled: false
+
+# Human code review does a better job of determining if number of arguments make sense or not
+Metrics/ParameterLists:
+  Enabled: false
+
+# Specs should catch bugs related to not calling super
+Lint/MissingSuper:
+  Enabled: false
+
+# If the code works as intended it's not ambiguous
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+# No idea how this would "do the opposite of what the author intends" as stated in the docs
+Lint/SafeNavigationWithEmpty:
+  Enabled: false
+
+# https://github.com/mynewsdesk/mynewsdesk/pull/3058
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# More parenthesis noise doesn't necessarily make ranges easier to read
+Lint/AmbiguousRange:
+  Enabled: false
+
+# Post 1.0 cop enablers
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+Gemspec/RequireMFA:
+  Enabled: true
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+Layout/LineContinuationSpacing:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+Layout/SpaceBeforeBrackets:
+  Enabled: true
+Lint/AmbiguousAssignment:
+  Enabled: true
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+Lint/ConstantOverwrittenInRescue:
+  Enabled: true
+Lint/DeprecatedConstants:
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateMagicComment:
+  Enabled: true
+Lint/DuplicateMatchPattern:
+  Enabled: true
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+Lint/EmptyBlock:
+  Enabled: true
+Lint/EmptyClass:
+  Enabled: true
+Lint/EmptyInPattern:
+  Enabled: true
+Lint/IncompatibleIoSelectWithFiberScheduler:
+  Enabled: true
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+Lint/MixedCaseRange:
+  Enabled: true
+Lint/NonAtomicFileOperation:
+  Enabled: true
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+Lint/NumberedParameterAssignment:
+  Enabled: true
+Lint/OrAssignmentToConstant:
+  Enabled: true
+Lint/RedundantDirGlobSort:
+  Enabled: true
+Lint/RedundantRegexpQuantifiers:
+  Enabled: true
+Lint/RefinementImportMethods:
+  Enabled: true
+Lint/RequireRangeParentheses:
+  Enabled: true
+Lint/RequireRelativeSelfPath:
+  Enabled: true
+Lint/SymbolConversion:
+  Enabled: false # TODO: re-enable when CI runs the latest Rubocop version
+Lint/ToEnumArguments:
+  Enabled: true
+Lint/TripleQuotes:
+  Enabled: true
+Lint/UnexpectedBlockArity:
+  Enabled: true
+Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+Lint/UselessRescue:
+  Enabled: true
+Lint/UselessRuby2Keywords:
+  Enabled: true
+Metrics/CollectionLiteralLength:
+  Enabled: true
+Naming/BlockForwarding:
+  Enabled: true
+Security/CompoundHash:
+  Enabled: true
+Security/IoMethods:
+  Enabled: true
+Style/ArgumentsForwarding:
+  Enabled: true
+Style/ArrayIntersect:
+  Enabled: true
+Style/CollectionCompact:
+  Enabled: true
+Style/ComparableClamp:
+  Enabled: true
+Style/ConcatArrayLiterals:
+  Enabled: true
+Style/DataInheritance:
+  Enabled: true
+Style/DirEmpty:
+  Enabled: true
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+Style/EmptyHeredoc:
+  Enabled: true
+Style/EndlessMethod:
+  Enabled: true
+Style/EnvHome:
+  Enabled: true
+Style/ExactRegexpMatch:
+  Enabled: true
+Style/FileEmpty:
+  Enabled: true
+Style/FileRead:
+  Enabled: true
+Style/FileWrite:
+  Enabled: true
+Style/HashConversion:
+  Enabled: true
+Style/HashExcept:
+  Enabled: true
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+Style/InPatternThen:
+  Enabled: true
+Style/MagicCommentFormat:
+  Enabled: true
+Style/MapCompactWithConditionalBlock:
+  Enabled: true
+Style/MapToHash:
+  Enabled: true
+Style/MapToSet:
+  Enabled: true
+Style/MinMaxComparison:
+  Enabled: true
+Style/MultilineInPatternThen:
+  Enabled: true
+Style/NegatedIfElseCondition:
+  Enabled: true
+Style/NestedFileDirname:
+  Enabled: true
+Style/NilLambda:
+  Enabled: true
+Style/NumberedParameters:
+  Enabled: true
+Style/NumberedParametersLimit:
+  Enabled: true
+Style/OperatorMethodCall:
+  Enabled: true
+Style/RedundantArrayConstructor:
+  Enabled: true
+Style/RedundantConstantBase:
+  Enabled: true
+Style/RedundantCurrentDirectoryInPath:
+  Enabled: true
+Style/RedundantDoubleSplatHashBraces:
+  Enabled: true
+Style/RedundantEach:
+  Enabled: true
+Style/RedundantFilterChain:
+  Enabled: true
+Style/RedundantHeredocDelimiterQuotes:
+  Enabled: true
+Style/RedundantInitialize:
+  Enabled: true
+Style/RedundantLineContinuation:
+  Enabled: true
+Style/RedundantRegexpArgument:
+  Enabled: true
+Style/RedundantRegexpConstructor:
+  Enabled: true
+Style/RedundantStringEscape:
+  Enabled: true
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: true
+Style/ObjectThen:
+  Enabled: true
+Style/QuotedSymbols:
+  Enabled: true
+Style/RedundantArgument:
+  Enabled: true
+Style/RedundantSelfAssignmentBranch:
+  Enabled: true
+Style/SelectByRegexp:
+  Enabled: true
+Style/StringChars:
+  Enabled: true
+Style/SwapValues:
+  Enabled: true
+Style/YAMLFileRead:
+  Enabled: true
+
+# Post 1.0 cop disablers
+Style/FetchEnvVar:
+  Enabled: false # while using .fetch is often a good idea, using .fetch("XXX", nil) seems worse than ["XXX"]
+Style/OpenStructUse:
+  Enabled: false # we have a lot of these in our codebase, could be a good idea to enable
+
+# rubocop-rails
+
+# Add the unconventional staging environment to avoid false positives
+Rails/UnknownEnv:
+  Environments: development, test, production, staging
+
+# Below: disabled since daunting to apply but potentially good ideas that should be re-visited
+
+# Maybe good idea for some cases, lots of offences, how to proceed?
+Rails/Date: { Enabled: false }
+# Maybe good idea for some cases, lots of offences, how to proceed?
+Rails/TimeZone: { Enabled: false }
+# Good idea for most cases, lots of offences, how to proceed?
+Rails/SkipsModelValidations: { Enabled: false }
+# Great idea, lots of offenses, how to proceed?
+Rails/HelperInstanceVariable: { Enabled: false }
+# Good idea where applicable but quite a few false positives where we don't have an inverse defined
+Rails/InverseOf: { Enabled: false }
+
+# The cops below are disabled due to disagreements or incompatabilities with our code-base
+
+# We've already stopped using update_attributes for ActiveRecord, remaining usage is from Salesforce gem
+Rails/ActiveRecordAliases: { Enabled: false }
+# Our ApplicationController is so bloated that we have legit use-cases to avoid subclassing it
+Rails/ApplicationController: { Enabled: false }
+# Method missing based find_by_xxx methods are actually more performance friendly since JIT-compiled
+Rails/DynamicFindBy: { Enabled: false }
+# Though it can make code more compact it makes code-navigation and grepping for methods harder
+Rails/Delegate: { Enabled: false }
+# Though a few violations are bad, "#{Rails.root}/foo" is more succinct than Rails.root.join("foo")
+Rails/FilePath: { Enabled: false }
+# Though reasonable on a new code base we have too many violations for application to be feasible
+Rails/HasAndBelongsToMany: { Enabled: false }
+# Though often true, there are situations where it's fine so human review can catch this instead
+Rails/HasManyOrHasOneDependent: { Enabled: false }
+# Arguably better idea to learn HTTP codes instead of trying to remember the Rails abstractions
+Rails/HttpStatus: { Enabled: false }
+# Adding rel="noopener" is done by default in modern browsers so no need to bother
+Rails/LinkToBlank: { Enabled: false }
+# We have a lot of offences but all of them legit (eg. used in seeds / rake tasks etc)
+Rails/Output: { Enabled: false }
+# Using .html_safe implies we're certain that the HTML is safe and take responsibility for the content
+Rails/OutputSafety: { Enabled: false }
+# Loading the rails environment is dog slow so avoiding loading it when possible is a good idea
+Rails/RakeEnvironment: { Enabled: false }
+# It's debatable whether the new validations API is an improvement and we mostly use the classic API
+Rails/Validation: { Enabled: false }
+# Disabled due to false positives with version 2.11 of rubocop-rails, can reenable with 2.12 or above
+Rails/ContentTag: { Enabled: false }
+
+# Post 2.0 cop enablers
+
+Rails/ActionControllerFlashBeforeRender: { Enabled: true }
+Rails/ActionControllerTestCase: { Enabled: true }
+Rails/ActionOrder: { Enabled: true }
+Rails/ActiveRecordCallbacksOrder: { Enabled: true }
+Rails/ActiveSupportOnLoad: { Enabled: true }
+Rails/AddColumnIndex: { Enabled: true }
+Rails/AfterCommitOverride: { Enabled: true }
+Rails/AttributeDefaultBlockValue: { Enabled: true }
+Rails/CompactBlank: { Enabled: true }
+Rails/DeprecatedActiveModelErrorsMethods: { Enabled: true }
+Rails/DotSeparatedKeys: { Enabled: true }
+Rails/DuplicateAssociation: { Enabled: true }
+Rails/DuplicateScope: { Enabled: true }
+Rails/DurationArithmetic: { Enabled: true }
+Rails/EagerEvaluationLogMessage: { Enabled: true }
+Rails/ExpandedDateRange: { Enabled: true }
+Rails/FindById: { Enabled: true }
+Rails/FreezeTime: { Enabled: true }
+Rails/I18nLocaleTexts: { Enabled: true, Exclude: [app/controllers/admin/**/*] }
+Rails/IgnoredColumnsAssignment: { Enabled: true }
+Rails/MailerName: { Enabled: true }
+Rails/MatchRoute: { Enabled: true }
+Rails/MigrationClassName: { Enabled: true }
+Rails/NegateInclude: { Enabled: true }
+Rails/Pluck: { Enabled: true }
+Rails/PluckInWhere: { Enabled: true }
+Rails/RedundantPresenceValidationOnBelongsTo: { Enabled: true }
+Rails/RedundantTravelBack: { Enabled: true }
+Rails/RenderInline: { Enabled: true }
+Rails/RenderPlainText: { Enabled: true }
+Rails/ResponseParsedBody: { Enabled: true }
+Rails/RootJoinChain: { Enabled: true }
+Rails/RootPathnameMethods: { Enabled: true }
+Rails/RootPublicPath: { Enabled: true }
+Rails/ShortI18n: { Enabled: true }
+Rails/StripHeredoc: { Enabled: true }
+Rails/ThreeStateBooleanColumn: { Enabled: true }
+Rails/TimeZoneAssignment: { Enabled: true, Exclude: [spec/spec_helper.rb] }
+Rails/ToFormattedS: { Enabled: true }
+Rails/TopLevelHashWithIndifferentAccess: { Enabled: true }
+Rails/ToSWithArgument: { Enabled: true }
+Rails/TransactionExitStatement: { Enabled: true }
+Rails/WhereEquals: { Enabled: true }
+Rails/WhereMissing: { Enabled: true }
+Rails/WhereNot: { Enabled: true }
+# Rails/WhereNotWithMultipleConditions: { Enabled: true } # what to do with this one exactly?
+
+# Post 2.0 cop disablers
+
+Rails/I18nLazyLookup: { Enabled: false } # design for grepability
+Rails/I18nLocaleAssignment: { Enabled: false } # annoying to use in specs and not violated outside of specs
+Rails/Inquiry: { Enabled: false } # unclear motivation for this cop
+Rails/SquishedSQLHeredocs: { Enabled: false } # may improve logs but bloats the code
+Rails/UnusedIgnoredColumns: { Enabled: false } # great cop but may cause violations in PR's which are not related to the diff
+Rails/WhereExists: { Enabled: false } # .exist?(...) is not always more readable than .where(...).exists?
+
+# rubocop-rspec
+
+# Excluding rswag specs due to incompatibility and requests specs where describing URLs / paths is common
+RSpec/DescribeClass: { Exclude: ["spec/api/**/*", "spec/requests/**/*"] }
+# Filepaths tends to not follow conventions for rswag / system and graphql specs
+RSpec/FilePath:
+  { Exclude: ["spec/api/**/*", "spec/system/**/*", "spec/graphql/**/*"] }
+# It's apparently common to use let(:subject) in mailers
+RSpec/SubjectDeclaration: { Exclude: ["spec/mailers/**/*"] }
+# Excluding rswag specs due to incompatibility
+RSpec/EmptyExampleGroup: { Exclude: ["spec/api/**/*"] }
+RSpec/ScatteredSetup: { Exclude: ["spec/api/**/*"] }
+RSpec/VariableDefinition: { Exclude: ["spec/api/**/*"] }
+RSpec/VariableName: { Exclude: ["spec/api/**/*"] }
+
+# Though it's true that mocking any instance is more brittle the alternative gets extremely painful at times
+RSpec/AnyInstance: { Enabled: false }
+# Can be useful for extremely long class names inside of namespaces but otherwise just adds indirection
+RSpec/DescribedClass: { Enabled: false }
+# Turns out human beings are good at reading stuff line by line, more so than jumping around abstractions
+RSpec/ExampleLength: { Enabled: false }
+# Often good advise but would incentivize using allow over expect when setting up mocks which is less robust
+RSpec/ExpectInHook: { Enabled: false }
+# Would unnecessarily bloat a large number of specs with additional mock boilerplate
+RSpec/MessageSpies: { Enabled: false }
+RSpec/StubbedMock: { Enabled: false }
+RSpec/MessageExpectation: { Enabled: false }
+# Multiple expectations per spec can read just fine and can be great for performance
+RSpec/MultipleExpectations: { Enabled: false }
+# Arbitrary restriction, lots of specs need a lot of data setup and no good alternative is provided
+RSpec/MultipleMemoizedHelpers: { Enabled: false }
+# It's good if we can keep nesting low but is it truly helpful to force a restriction for it?
+RSpec/NestedGroups: { Enabled: false }
+# Most of the time makes expectations more obscure
+RSpec/PredicateMatcher: { Enabled: false }
+# Disabled to mirror configuration for rubocop-rails
+RSpec/Rails/HttpStatus: { Enabled: false }
+# Shakespeare!
+RSpec/Be: { Enabled: false }
+
+# Pending:
+
+# Great idea to avoid legacy vibes in the specs but ~1500 violation
+RSpec/InstanceVariable: { Enabled: false }
+# Probably good idea, ~175 violations
+RSpec/LetSetup: { Enabled: false }
+# Probably a good idea to avoid stubbing in general, ~59 violations
+RSpec/SubjectStub: { Enabled: false }
+
+# Post 2.0 cop enablers
+
+RSpec/BeEmpty: { Enabled: true }
+RSpec/BeEq: { Enabled: true }
+RSpec/BeNil: { Enabled: true }
+RSpec/ChangeByZero: { Enabled: true }
+RSpec/ContainExactly: { Enabled: true }
+RSpec/DuplicatedMetadata: { Enabled: true }
+RSpec/ExcessiveDocstringSpacing: { Enabled: true }
+RSpec/IdenticalEqualityAssertion: { Enabled: true }
+RSpec/PendingWithoutReason: { Enabled: true }
+RSpec/Rails/AvoidSetupHook: { Enabled: true }
+RSpec/Rails/HaveHttpStatus: { Enabled: true }
+RSpec/Rails/InferredSpecType: { Enabled: true }
+RSpec/Rails/MinitestAssertions: { Enabled: true }
+RSpec/Rails/TravelAround: { Enabled: true }
+RSpec/RedundantAround: { Enabled: true }
+RSpec/SkipBlockInsideExample: { Enabled: true }
+RSpec/SortMetadata: { Enabled: true }
+RSpec/VerifiedDoubleReference: { Enabled: true }
+
+# Post 2.0 cop disablers
+
+RSpec/IndexedLet: { Enabled: false } # numbered lets are fine
+RSpec/MatchArray: { Enabled: false } # unclear motivation for this cop
+RSpec/NoExpectationExample: { Enabled: false } # TODO: revisit this, seems good but will take time

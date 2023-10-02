@@ -2,15 +2,11 @@
 
 source "https://rubygems.org"
 
-ruby "2.5.1"
+File.read(".ruby-version")
 
+gem "puma"
 gem "rack"
-gem "thin"
 
 group :development do
-  gem "bundler-audit", require: false
-  gem "byebug"
   gem "rspec"
-  gem "rubocop"
-  gem "rubocop-rspec", require: false
 end
